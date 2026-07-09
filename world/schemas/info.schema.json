@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "info.schema.json",
+  "title": "World Entity Info",
+  "description": "Generic metadata for a world entity.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable identifier for the entity."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable entity name."
+    },
+    "type": {
+      "type": "string",
+      "description": "Entity type such as npc, location, item, or rule."
+    },
+    "version": {
+      "type": "string",
+      "description": "Optional version string for the entity definition."
+    },
+    "status": {
+      "type": "string",
+      "description": "Optional lifecycle status such as draft, active, or archived."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "Optional creation timestamp."
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "Optional update timestamp."
+    },
+    "summary": {
+      "type": "string",
+      "description": "Short text summary of the entity."
+    }
+  }
+}

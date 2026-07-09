@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tags.schema.json",
+  "title": "World Entity Tags",
+  "description": "Flexible tagging structure for a world entity.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "tags": {
+      "type": "array",
+      "description": "List of simple tags.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "Optional category names.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Optional extensible key-value attributes.",
+      "additionalProperties": true
+    }
+  }
+}

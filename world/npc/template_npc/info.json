@@ -1,0 +1,8 @@
+{
+  "id": "template_npc",
+  "name": "Template NPC",
+  "type": "npc",
+  "version": "1.0.0",
+  "status": "draft",
+  "summary": "Template metadata for an NPC entity."
+}

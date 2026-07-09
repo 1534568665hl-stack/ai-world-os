@@ -1,0 +1,14 @@
+{
+  "tags": [
+    "rule",
+    "template"
+  ],
+  "categories": [
+    "constraint"
+  ],
+  "attributes": {
+    "scope": "",
+    "priority": "",
+    "trigger": ""
+  }
+}

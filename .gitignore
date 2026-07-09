@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.Python
+build/
+dist/
+eggs/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# Node.js
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/
+.parcel-cache/
+coverage/
+vite.svg
+*.tsbuildinfo
+
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project-generated / transient
+cache/*
+temp/*
+embeddings/*
+!cache/.gitkeep
+!temp/.gitkeep
+!embeddings/.gitkeep

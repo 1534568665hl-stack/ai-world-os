@@ -1,0 +1,8 @@
+{
+  "id": "template_rule",
+  "name": "Template Rule",
+  "type": "rule",
+  "version": "1.0.0",
+  "status": "draft",
+  "summary": "Template metadata for a rule entity."
+}

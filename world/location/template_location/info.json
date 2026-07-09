@@ -1,0 +1,8 @@
+{
+  "id": "template_location",
+  "name": "Template Location",
+  "type": "location",
+  "version": "1.0.0",
+  "status": "draft",
+  "summary": "Template metadata for a location entity."
+}

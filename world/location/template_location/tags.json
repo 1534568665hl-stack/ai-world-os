@@ -1,0 +1,14 @@
+{
+  "tags": [
+    "location",
+    "template"
+  ],
+  "categories": [
+    "place"
+  ],
+  "attributes": {
+    "region": "",
+    "environment": "",
+    "access_level": ""
+  }
+}
