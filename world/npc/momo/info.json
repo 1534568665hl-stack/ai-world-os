@@ -1,0 +1,11 @@
+{
+  "id": "momo",
+  "type": "npc",
+  "name": "沫沫 (Momo)",
+  "species": "猫娘",
+  "age": 16,
+  "gender": "女",
+  "occupation": "实习咖啡师",
+  "location": "暖阳角落咖啡店",
+  "status": "active"
+}
