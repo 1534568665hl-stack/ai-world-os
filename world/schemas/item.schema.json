@@ -1,0 +1,187 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "item.schema.json",
+
+  "title": "Item Entity Data",
+  "description": "Specific data structure for item entities.",
+
+  "type": "object",
+
+  "additionalProperties": true,
+
+  "properties": {
+
+
+    "item_type": {
+      "type": "string",
+      "description": "Category of item."
+    },
+
+
+    "rarity": {
+      "type": "string",
+      "description": "Item rarity level."
+    },
+
+
+    "owner": {
+      "type": "string",
+      "description": "Current owner entity id."
+    },
+
+
+    "origin": {
+      "type": "object",
+
+      "description": "Item origin information.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "creator": {
+          "type": "string"
+        },
+
+        "location": {
+          "type": "string"
+        },
+
+        "time_period": {
+          "type": "string"
+        }
+
+      }
+    },
+
+
+    "appearance": {
+      "type": "object",
+
+      "description": "Physical appearance.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "description": {
+          "type": "string"
+        },
+
+        "material": {
+          "type": "string"
+        },
+
+        "color": {
+          "type": "string"
+        },
+
+        "size": {
+          "type": "string"
+        }
+
+      }
+    },
+
+
+    "function": {
+      "type": "object",
+
+      "description": "Item usage and effects.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "purpose": {
+          "type": "string"
+        },
+
+        "effect": {
+          "type": "string"
+        },
+
+        "limitations": {
+          "type": "array",
+
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "history": {
+      "type": "object",
+
+      "description": "Historical information.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "background": {
+          "type": "string"
+        },
+
+        "important_events": {
+          "type": "array",
+
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "state": {
+      "type": "object",
+
+      "description": "Current item state.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "condition": {
+          "type": "string"
+        },
+
+        "location": {
+          "type": "string"
+        }
+
+      }
+    },
+
+
+    "relations": {
+      "type": "array",
+
+      "description": "Related entities.",
+
+      "items": {
+
+        "type": "object",
+
+        "properties": {
+
+          "target_id": {
+            "type": "string"
+          },
+
+          "relation": {
+            "type": "string"
+          }
+
+        }
+      }
+    }
+
+
+  }
+}
