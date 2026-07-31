@@ -1,0 +1,7 @@
+{
+  "id": "species_rule",
+  "name": "人类与猫娘种族规则",
+  "type": "rule",
+  "category": "species_system",
+  "importance": "core"
+}
