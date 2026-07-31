@@ -1,0 +1,8 @@
+{
+  "id": "wolf_leader",
+  "name": "狼群首领",
+  "type": "npc",
+  "species": "wolf",
+  "importance": "main_story",
+  "role": "hidden_route_character"
+}
