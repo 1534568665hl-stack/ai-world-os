@@ -1,0 +1,11 @@
+{
+  "id": "chapter_01",
+  "name": "初入融合都市",
+  "type": "main_story",
+  "importance": "core",
+  "location": "fusion_city",
+  "participants": [
+    "player",
+    "momo"
+  ]
+}
