@@ -1,0 +1,7 @@
+{
+  "id": "world_basic",
+  "name": "绒耳纪元世界基础规则",
+  "type": "rule",
+  "category": "world_physics",
+  "importance": "core"
+}
