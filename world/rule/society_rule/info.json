@@ -1,0 +1,7 @@
+{
+  "id": "society_rule",
+  "name": "绒耳纪元社会运行规则",
+  "type": "rule",
+  "category": "social_system",
+  "importance": "core"
+}
