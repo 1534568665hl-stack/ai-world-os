@@ -1,0 +1,110 @@
+{
+  "start": "arrival_city",
+
+  "nodes": [
+
+    {
+      "id": "arrival_city",
+      "type": "scene",
+
+      "description":
+      "玩家抵达融合都市，第一次观察这个未来城市。",
+
+      "next": "city_explore"
+    },
+
+
+    {
+      "id": "city_explore",
+      "type": "choice",
+
+      "options": [
+
+        {
+          "text": "探索城市街道",
+          "next": "street_event"
+        },
+
+        {
+          "text": "寻找休息地点",
+          "next": "cafe_enter"
+        },
+
+        {
+          "text": "观察城市居民",
+          "next": "citizen_observe"
+        }
+
+      ]
+    },
+
+
+    {
+      "id": "street_event",
+      "type": "scene",
+
+      "next": "cafe_enter"
+    },
+
+
+    {
+      "id": "citizen_observe",
+      "type": "scene",
+
+      "next": "cafe_enter"
+    },
+
+
+    {
+      "id": "cafe_enter",
+      "type": "location",
+
+      "location":
+      "warm_corner",
+
+      "next":
+      "meet_momo"
+    },
+
+
+    {
+      "id": "meet_momo",
+      "type": "character",
+
+      "character":
+      "momo",
+
+      "next":
+      "first_dialogue"
+    },
+
+
+    {
+      "id": "first_dialogue",
+      "type": "dialogue",
+
+      "next":
+      "chapter_end"
+    },
+
+
+    {
+      "id": "chapter_end",
+      "type": "complete",
+
+      "unlock": [
+
+        "momo_daily_interaction",
+        "city_exploration"
+
+      ],
+
+      "update":
+
+      {
+        "main_progress": 1
+      }
+    }
+
+  ]
+}
