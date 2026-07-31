@@ -1,0 +1,312 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "event.schema.json",
+
+  "title": "Event Entity Data",
+  "description": "Specific data structure for event entities.",
+
+  "type": "object",
+
+  "additionalProperties": true,
+
+  "properties": {
+
+
+    "event_type": {
+      "type": "string",
+      "description": "Event category such as main_story, side_story, random, or world_event."
+    },
+
+
+    "priority": {
+      "type": "string",
+      "description": "Event execution priority."
+    },
+
+
+    "trigger": {
+      "type": "object",
+
+      "description": "Conditions required to activate the event.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+
+        "type": {
+          "type": "string",
+          "description": "Trigger method."
+        },
+
+
+        "conditions": {
+          "type": "array",
+
+          "items": {
+            "type": "object",
+
+            "additionalProperties": true,
+
+            "properties": {
+
+
+              "target": {
+                "type": "string",
+                "description": "Target entity or state."
+              },
+
+
+              "operator": {
+                "type": "string",
+                "description": "Condition comparison operator."
+              },
+
+
+              "value": {
+                "description": "Expected condition value."
+              }
+
+            }
+          }
+        }
+
+      }
+    },
+
+
+    "participants": {
+      "type": "array",
+
+      "description": "Entities involved in the event.",
+
+      "items": {
+        "type": "string"
+      }
+    },
+
+
+    "location": {
+      "type": "string",
+
+      "description": "Primary event location."
+    },
+
+
+    "flow": {
+      "type": "object",
+
+      "description": "Event progression structure.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+
+        "start_node": {
+          "type": "string"
+        },
+
+
+        "nodes": {
+          "type": "array",
+
+          "items": {
+
+            "type": "object",
+
+            "additionalProperties": true,
+
+            "properties": {
+
+
+              "id": {
+                "type": "string"
+              },
+
+
+              "type": {
+                "type": "string",
+
+                "description": "Node type such as scene, dialogue, choice, action."
+              },
+
+
+              "content": {
+                "type": "string"
+              },
+
+
+              "next": {
+                "type": "array",
+
+                "items": {
+                  "type": "string"
+                }
+              },
+
+
+              "options": {
+                "type": "array",
+
+                "items": {
+
+                  "type": "object",
+
+                  "properties": {
+
+                    "text": {
+                      "type": "string"
+                    },
+
+                    "next": {
+                      "type": "string"
+                    },
+
+                    "condition": {
+                      "type": "string"
+                    }
+
+                  }
+                }
+              }
+
+            }
+          }
+        }
+
+      }
+    },
+
+
+    "effects": {
+      "type": "object",
+
+      "description": "Changes caused by event completion.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+
+        "relationship_changes": {
+          "type": "array",
+
+          "items": {
+
+            "type": "object",
+
+            "properties": {
+
+              "target_id": {
+                "type": "string"
+              },
+
+              "value": {
+                "type": "number"
+              }
+
+            }
+          }
+        },
+
+
+        "world_changes": {
+          "type": "array",
+
+          "items": {
+
+            "type": "object",
+
+            "properties": {
+
+              "target": {
+                "type": "string"
+              },
+
+              "change": {
+                "type": "string"
+              }
+
+            }
+          }
+        },
+
+
+        "unlock": {
+          "type": "array",
+
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "state": {
+      "type": "object",
+
+      "description": "Event runtime state.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+
+        "status": {
+          "type": "string",
+
+          "enum": [
+            "inactive",
+            "available",
+            "running",
+            "completed",
+            "failed"
+          ]
+        },
+
+
+        "repeatable": {
+          "type": "boolean"
+        },
+
+
+        "cooldown": {
+          "type": "number"
+        }
+
+      }
+    },
+
+
+    "memory_updates": {
+      "type": "array",
+
+      "description": "Memory records generated after event.",
+
+      "items": {
+
+        "type": "object",
+
+        "properties": {
+
+          "target": {
+            "type": "string"
+          },
+
+          "memory": {
+            "type": "string"
+          },
+
+          "importance": {
+            "type": "string"
+          }
+
+        }
+      }
+    }
+
+  }
+}
