@@ -1,0 +1,8 @@
+{
+  "id": "wolf_reserve",
+  "name": "狼群保留区",
+  "type": "location",
+  "area": "融合都市外围区域",
+  "importance": "main_story",
+  "access": "restricted"
+}
