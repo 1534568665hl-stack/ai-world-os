@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "npc.schema.json",
+
+  "title": "NPC Entity Data",
+  "description": "Specific data structure for NPC entities.",
+
+  "type": "object",
+
+  "additionalProperties": true,
+
+  "properties": {
+
+    "species": {
+      "type": "string",
+      "description": "NPC species or race."
+    },
+
+    "age": {
+      "type": "integer",
+      "description": "NPC age."
+    },
+
+    "gender": {
+      "type": "string",
+      "description": "NPC gender."
+    },
+
+    "occupation": {
+      "type": "string",
+      "description": "NPC occupation or social role."
+    },
+
+
+    "identity": {
+      "type": "object",
+      "description": "Basic identity information.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "birthplace": {
+          "type": "string"
+        },
+
+        "residence": {
+          "type": "string"
+        },
+
+        "affiliation": {
+          "type": "string"
+        }
+
+      }
+    },
+
+
+    "personality": {
+      "type": "object",
+      "description": "NPC personality structure.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "traits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "habits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "likes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "dislikes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "background": {
+      "type": "object",
+      "description": "NPC history and background.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "history": {
+          "type": "string"
+        },
+
+        "family": {
+          "type": "string"
+        },
+
+        "secrets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "relationships": {
+      "type": "array",
+
+      "description": "Relationships with other entities.",
+
+      "items": {
+
+        "type": "object",
+
+        "additionalProperties": true,
+
+        "properties": {
+
+          "target_id": {
+            "type": "string",
+            "description": "Target entity id."
+          },
+
+          "relation": {
+            "type": "string",
+            "description": "Relationship type."
+          },
+
+          "level": {
+            "type": "number",
+            "description": "Relationship value."
+          }
+
+        }
+
+      }
+    },
+
+
+    "state": {
+      "type": "object",
+
+      "description": "Current dynamic state.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "location": {
+          "type": "string"
+        },
+
+        "mood": {
+          "type": "string"
+        },
+
+        "activity": {
+          "type": "string"
+        }
+
+      }
+    },
+
+
+    "memory": {
+      "type": "object",
+
+      "description": "NPC memory storage.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "short_term": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+        "long_term": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "behavior_rules": {
+      "type": "object",
+
+      "description": "Behavior constraints for AI simulation.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "speaking_style": {
+          "type": "string"
+        },
+
+        "decision_pattern": {
+          "type": "string"
+        },
+
+        "forbidden_actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    }
+
+  }
+}
