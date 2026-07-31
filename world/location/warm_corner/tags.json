@@ -1,0 +1,27 @@
+{
+  "tags": [
+    "咖啡店",
+    "商业",
+    "休闲",
+    "融合都市",
+    "第三街区",
+    "阳光",
+    "木质",
+    "慢节奏",
+    "爵士乐",
+    "猫娘",
+    "日常"
+  ],
+
+  "categories": [
+    "location",
+    "commercial",
+    "relaxation"
+  ],
+
+  "attributes": {
+    "atmosphere": "温暖、慵懒、舒适",
+    "pace": "slow",
+    "privacy": "public"
+  }
+}
