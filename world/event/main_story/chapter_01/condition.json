@@ -1,0 +1,16 @@
+{
+  "trigger": [
+    "首次进入融合都市",
+    "新玩家开始",
+    "主线未开启"
+  ],
+
+  "requirement": {
+    "chapter": 0,
+    "location": "none"
+  },
+
+  "priority": "high",
+
+  "once": true
+}
