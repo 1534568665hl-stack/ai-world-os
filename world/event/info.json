@@ -1,0 +1,7 @@
+{
+  "id": "event",
+  "name": "绒耳纪元事件系统",
+  "type": "system",
+  "category": "world_event",
+  "importance": "core"
+}
