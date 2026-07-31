@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "location.schema.json",
+
+  "title": "Location Entity Data",
+  "description": "Specific data structure for location entities.",
+
+  "type": "object",
+
+  "additionalProperties": true,
+
+  "properties": {
+
+    "location_type": {
+      "type": "string",
+      "description": "Location category."
+    },
+
+
+    "region": {
+      "type": "string",
+      "description": "Parent region or area."
+    },
+
+
+    "coordinates": {
+      "type": "object",
+
+      "description": "Optional world coordinates.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "x": {
+          "type": "number"
+        },
+
+        "y": {
+          "type": "number"
+        },
+
+        "z": {
+          "type": "number"
+        }
+
+      }
+    },
+
+
+    "environment": {
+      "type": "object",
+
+      "description": "Environmental information.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "atmosphere": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+
+        "visual_style": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+
+        "soundscape": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+
+
+        "smell": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "layout": {
+      "type": "object",
+
+      "description": "Physical structure.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "description": {
+          "type": "string"
+        },
+
+
+        "areas": {
+          "type": "array",
+
+          "items": {
+
+            "type": "object",
+
+            "properties": {
+
+              "name": {
+                "type": "string"
+              },
+
+              "description": {
+                "type": "string"
+              }
+
+            }
+          }
+        }
+
+      }
+    },
+
+
+    "access": {
+      "type": "object",
+
+      "description": "Access restrictions.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "level": {
+          "type": "string"
+        },
+
+
+        "requirements": {
+          "type": "array",
+
+          "items": {
+            "type": "string"
+          }
+        }
+
+      }
+    },
+
+
+    "residents": {
+      "type": "array",
+
+      "description": "NPCs frequently located here.",
+
+      "items": {
+        "type": "string"
+      }
+    },
+
+
+    "services": {
+      "type": "array",
+
+      "description": "Available functions.",
+
+      "items": {
+        "type": "string"
+      }
+    },
+
+
+    "events": {
+      "type": "array",
+
+      "description": "Possible triggered events.",
+
+      "items": {
+
+        "type": "object",
+
+        "properties": {
+
+          "event_id": {
+            "type": "string"
+          },
+
+          "condition": {
+            "type": "string"
+          }
+
+        }
+      }
+    },
+
+
+    "state": {
+      "type": "object",
+
+      "description": "Dynamic location state.",
+
+      "additionalProperties": true,
+
+      "properties": {
+
+        "weather": {
+          "type": "string"
+        },
+
+        "time_condition": {
+          "type": "string"
+        },
+
+        "occupancy": {
+          "type": "string"
+        }
+
+      }
+    }
+
+  }
+}
