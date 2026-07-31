@@ -1,0 +1,7 @@
+{
+  "id": "citizenship_rule",
+  "name": "猫娘公民认证与身份制度",
+  "type": "rule",
+  "category": "citizenship_system",
+  "importance": "core"
+}
