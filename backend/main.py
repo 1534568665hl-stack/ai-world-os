@@ -1,6 +1,29 @@
 import os
 import sys
+import io
 from datetime import datetime
+
+
+# ==========================
+# UTF-8 输入输出保护
+# ==========================
+
+if sys.stdin.encoding != "UTF-8":
+
+    sys.stdin = io.TextIOWrapper(
+        sys.stdin.buffer,
+        encoding="utf-8",
+        errors="replace"
+    )
+
+
+if sys.stdout.encoding != "UTF-8":
+
+    sys.stdout = io.TextIOWrapper(
+        sys.stdout.buffer,
+        encoding="utf-8",
+        errors="replace"
+    )
 
 
 sys.path.append(
