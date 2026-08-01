@@ -42,18 +42,11 @@ from backend.core.state_manager import StateManager
 
 
 
-
 def main():
 
     print(
         "====== 🤖 Welcome to AI World OS (Terminal Engine v1.0) ======"
     )
-
-
-
-    # ==========================
-    # World Loader
-    # ==========================
 
 
     world_dir = "./world"
@@ -88,11 +81,6 @@ def main():
 
 
 
-    # ==========================
-    # Core Modules
-    # ==========================
-
-
     retriever = Retriever(
         entities=entities
     )
@@ -100,30 +88,24 @@ def main():
 
     context_builder = ContextBuilder()
 
-
     prompt_builder = PromptBuilder()
-
 
     llm_client = LLMClient()
 
-
     memory_manager = MemoryManager()
 
-
     memory_extractor = MemoryExtractor()
-
 
     state_manager = StateManager()
 
 
 
     # ==========================
-    # Load World State
+    # World State
     # ==========================
 
 
     world_state = state_manager.load()
-
 
 
     print(
@@ -156,11 +138,6 @@ def main():
         f"BASE_URL: {llm_client.base_url}"
     )
 
-
-
-    # ==========================
-    # Input
-    # ==========================
 
 
     print(
@@ -196,7 +173,7 @@ def main():
 
 
     # ==========================
-    # Save User Memory
+    # Save User Message
     # ==========================
 
 
@@ -205,11 +182,6 @@ def main():
         user_input
     )
 
-
-
-    # ==========================
-    # Runtime Context
-    # ==========================
 
 
     current_time = datetime.now().strftime(
@@ -222,17 +194,14 @@ def main():
         "message":
             user_input,
 
-
         "time":
             current_time,
-
 
         "current_location":
             world_state.get(
                 "location",
                 ""
             ),
-
 
         "active_npc":
             world_state.get(
@@ -244,11 +213,6 @@ def main():
 
 
 
-    # ==========================
-    # Retriever
-    # ==========================
-
-
     print(
         "[Pipeline] 1/5. Running Retriever filtering..."
     )
@@ -258,11 +222,6 @@ def main():
         user_context
     )
 
-
-
-    # ==========================
-    # Context Builder
-    # ==========================
 
 
     print(
@@ -277,11 +236,6 @@ def main():
 
 
 
-    # ==========================
-    # Prompt Builder
-    # ==========================
-
-
     print(
         "[Pipeline] 3/5. Rendering final System Prompt..."
     )
@@ -293,28 +247,58 @@ def main():
 
 
 
-    # ==========================
-    # LLM
-    # ==========================
-
-
     print(
         "[Pipeline] 4/5. Dispatching payload to LLM Client..."
     )
 
 
+
     system_instruction = (
 
-        "你是 AI World OS 的世界运行核心控制台。"
+        "你是 AI World OS 的世界运行核心。"
 
-        "请结合世界数据、角色设定、"
-        "历史记忆和当前世界状态推进剧情。"
+        "\n\n你的任务："
+        "根据提供的世界数据、NPC资料、地点信息、规则和记忆，"
+        "生成连续、合理的世界响应。"
 
-        "保持世界连续性。"
 
-        "不要虚构不存在的系统错误。"
+        "\n\n【重要运行规则】"
 
-        "不要向玩家暴露API、代码、服务器细节。"
+
+        "\n1. 数据真实性："
+        "只能把 Prompt 中提供的数据视为真实存在。"
+        "不要假装拥有不存在的数据库记录。"
+
+
+        "\n2. 状态限制："
+        "你不能声称已经修改世界状态。"
+        "禁止输出："
+        "‘状态已更新’、"
+        "‘永久保存成功’、"
+        "‘好感度已经提升’、"
+        "‘NPC记忆已经写入’"
+        "等后台操作结果。"
+
+
+        "\n3. 事件描述："
+        "可以描述当前剧情中发生的事情，"
+        "但必须明确这是当前叙事，而不是数据库修改。"
+
+
+        "\n4. 记忆规则："
+        "玩家询问过去信息时，"
+        "必须依据 Memory Records。"
+        "没有找到记录时必须说明没有相关记忆。"
+
+
+        "\n5. NPC规则："
+        "NPC只能使用已有设定。"
+        "未知背景不要自行编造成既定事实。"
+
+
+        "\n6. 输出风格："
+        "保持沉浸式世界模拟风格。"
+        "不要暴露服务器、API、代码实现细节。"
 
     )
 
@@ -328,7 +312,7 @@ def main():
 
 
     # ==========================
-    # Save Assistant Memory
+    # Save AI Memory
     # ==========================
 
 
@@ -352,7 +336,7 @@ def main():
 
 
     # ==========================
-    # Long Term Memory
+    # Extract Long Memory
     # ==========================
 
 
@@ -369,11 +353,6 @@ def main():
             memory["importance"]
         )
 
-
-
-    # ==========================
-    # Output
-    # ==========================
 
 
     print(
