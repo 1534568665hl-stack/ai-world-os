@@ -42,11 +42,108 @@ from backend.core.state_manager import StateManager
 
 
 
+# ==========================
+# World State Update
+# ==========================
+
+def update_world_state(
+    state_manager,
+    user_input,
+    world_state
+):
+
+    rules = {
+
+        "暖阳角落":
+        {
+            "location":
+                "L_Warm_Corner",
+
+            "active_npc":
+                [
+                    "momo"
+                ]
+        },
+
+
+        "咖啡店":
+        {
+            "location":
+                "L_Warm_Corner",
+
+            "active_npc":
+                [
+                    "momo"
+                ]
+        },
+
+
+        "沫沫":
+        {
+            "location":
+                "L_Warm_Corner",
+
+            "active_npc":
+                [
+                    "momo"
+                ]
+        }
+
+    }
+
+
+
+    for keyword, data in rules.items():
+
+        if keyword in user_input:
+
+            print(
+                f"[State] Trigger matched: {keyword}"
+            )
+
+
+            new_state = state_manager.update(
+                **data
+            )
+
+
+            print(
+                "[State] Saved:"
+            )
+
+
+            print(
+                new_state
+            )
+
+
+            return new_state
+
+
+
+    print(
+        "[State] No update triggered."
+    )
+
+
+    return world_state
+
+
+
+
+
 def main():
+
 
     print(
         "====== 🤖 Welcome to AI World OS (Terminal Engine v1.0) ======"
     )
+
+
+
+    # ==========================
+    # Load World
+    # ==========================
 
 
     world_dir = "./world"
@@ -55,7 +152,7 @@ def main():
     if not os.path.exists(world_dir):
 
         print(
-            f"❌ 错误: 找不到世界数据目录 '{world_dir}'"
+            f"❌ 找不到世界目录: {world_dir}"
         )
 
         return
@@ -81,6 +178,11 @@ def main():
 
 
 
+    # ==========================
+    # Modules
+    # ==========================
+
+
     retriever = Retriever(
         entities=entities
     )
@@ -88,24 +190,41 @@ def main():
 
     context_builder = ContextBuilder()
 
+
     prompt_builder = PromptBuilder()
+
 
     llm_client = LLMClient()
 
+
     memory_manager = MemoryManager()
 
+
     memory_extractor = MemoryExtractor()
+
 
     state_manager = StateManager()
 
 
 
+    print(
+        "[State File]"
+    )
+
+
+    print(
+        state_manager.path
+    )
+
+
+
     # ==========================
-    # World State
+    # Current State
     # ==========================
 
 
     world_state = state_manager.load()
+
 
 
     print(
@@ -145,6 +264,7 @@ def main():
     )
 
 
+
     try:
 
         user_input = input(
@@ -155,7 +275,7 @@ def main():
     except UnicodeDecodeError:
 
         print(
-            "[System] 输入编码错误，请重新输入。"
+            "输入编码错误"
         )
 
         return
@@ -164,16 +284,35 @@ def main():
 
     if not user_input.strip():
 
-        print(
-            "[System] 输入不能为空，程序退出。"
-        )
-
         return
 
 
 
     # ==========================
-    # Save User Message
+    # Update State
+    # ==========================
+
+
+    world_state = update_world_state(
+        state_manager,
+        user_input,
+        world_state
+    )
+
+
+
+    print(
+        "[DEBUG] Current State:"
+    )
+
+    print(
+        world_state
+    )
+
+
+
+    # ==========================
+    # Memory
     # ==========================
 
 
@@ -184,9 +323,9 @@ def main():
 
 
 
-    current_time = datetime.now().strftime(
-        "%Y-%m-%d %H:%M"
-    )
+    # ==========================
+    # Context
+    # ==========================
 
 
     user_context = {
@@ -195,7 +334,9 @@ def main():
             user_input,
 
         "time":
-            current_time,
+            datetime.now().strftime(
+                "%Y-%m-%d %H:%M"
+            ),
 
         "current_location":
             world_state.get(
@@ -230,8 +371,8 @@ def main():
 
 
     context_object = context_builder.build(
-        user_context=user_context,
-        retrieved_data=retrieved_data
+        user_context,
+        retrieved_data
     )
 
 
@@ -253,67 +394,27 @@ def main():
 
 
 
-    system_instruction = (
+    system_instruction = """
 
-        "你是 AI World OS 的世界运行核心。"
+你是 AI World OS 世界运行核心。
 
-        "\n\n你的任务："
-        "根据提供的世界数据、NPC资料、地点信息、规则和记忆，"
-        "生成连续、合理的世界响应。"
+规则：
 
+1. World 数据是真实来源。
+2. 禁止创造不存在的NPC和地点。
+3. 不允许声称修改后台数据库。
+4. 保持世界状态连续。
+5. 不暴露代码、API、服务器。
 
-        "\n\n【重要运行规则】"
-
-
-        "\n1. 数据真实性："
-        "只能把 Prompt 中提供的数据视为真实存在。"
-        "不要假装拥有不存在的数据库记录。"
-
-
-        "\n2. 状态限制："
-        "你不能声称已经修改世界状态。"
-        "禁止输出："
-        "‘状态已更新’、"
-        "‘永久保存成功’、"
-        "‘好感度已经提升’、"
-        "‘NPC记忆已经写入’"
-        "等后台操作结果。"
-
-
-        "\n3. 事件描述："
-        "可以描述当前剧情中发生的事情，"
-        "但必须明确这是当前叙事，而不是数据库修改。"
-
-
-        "\n4. 记忆规则："
-        "玩家询问过去信息时，"
-        "必须依据 Memory Records。"
-        "没有找到记录时必须说明没有相关记忆。"
-
-
-        "\n5. NPC规则："
-        "NPC只能使用已有设定。"
-        "未知背景不要自行编造成既定事实。"
-
-
-        "\n6. 输出风格："
-        "保持沉浸式世界模拟风格。"
-        "不要暴露服务器、API、代码实现细节。"
-
-    )
+"""
 
 
 
     ai_response = llm_client.generate_response(
-        prompt=final_prompt,
-        system_instruction=system_instruction
+        final_prompt,
+        system_instruction
     )
 
-
-
-    # ==========================
-    # Save AI Memory
-    # ==========================
 
 
     if (
@@ -327,17 +428,6 @@ def main():
             ai_response
         )
 
-    else:
-
-        print(
-            "[Memory] Error response ignored."
-        )
-
-
-
-    # ==========================
-    # Extract Long Memory
-    # ==========================
 
 
     memories = memory_extractor.extract(
@@ -356,7 +446,7 @@ def main():
 
 
     print(
-        "[Pipeline] 5/5. Execution complete. Response received:\n"
+        "[Pipeline] 5/5. Execution complete."
     )
 
 
@@ -373,6 +463,7 @@ def main():
     print(
         "====================================="
     )
+
 
 
 
