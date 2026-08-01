@@ -91,7 +91,6 @@ def main():
     # 输入
     # ==========================
 
-
     print(
         "\n--------------------------------------------------------------"
     )
@@ -116,7 +115,6 @@ def main():
     # 保存玩家输入
     # ==========================
 
-
     memory_manager.add_message(
         "user",
         user_input
@@ -127,7 +125,6 @@ def main():
     # ==========================
     # Runtime Context
     # ==========================
-
 
     current_time = datetime.now().strftime(
         "%Y-%m-%d %H:%M"
@@ -156,7 +153,6 @@ def main():
     # Retriever
     # ==========================
 
-
     print(
         "[Pipeline] 1/5. Running Retriever filtering..."
     )
@@ -171,7 +167,6 @@ def main():
     # ==========================
     # Context
     # ==========================
-
 
     print(
         "[Pipeline] 2/5. Building unified Context Object..."
@@ -189,7 +184,6 @@ def main():
     # Prompt
     # ==========================
 
-
     print(
         "[Pipeline] 3/5. Rendering final System Prompt..."
     )
@@ -204,7 +198,6 @@ def main():
     # ==========================
     # LLM
     # ==========================
-
 
     print(
         "[Pipeline] 4/5. Dispatching payload to LLM Client..."
@@ -234,19 +227,24 @@ def main():
     # 保存AI回复
     # ==========================
 
-
     if not ai_response.startswith("Error:"):
-    memory_manager.add_message(
-        "assistant",
-        ai_response
-    )
+
+        memory_manager.add_message(
+            "assistant",
+            ai_response
+        )
+
+    else:
+
+        print(
+            "[Memory] Skip saving failed LLM response."
+        )
 
 
 
     # ==========================
     # 提取长期记忆
     # ==========================
-
 
     memories = memory_extractor.extract(
         user_input
@@ -266,7 +264,6 @@ def main():
     # ==========================
     # 输出
     # ==========================
-
 
     print(
         "[Pipeline] 5/5. Execution complete. Response received:\n"
