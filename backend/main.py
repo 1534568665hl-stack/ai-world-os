@@ -1,29 +1,21 @@
 import os
 import sys
-import io
 from datetime import datetime
 
 
 # ==========================
-# UTF-8 输入输出保护
+# UTF-8 修复
 # ==========================
 
-if sys.stdin.encoding != "UTF-8":
-
-    sys.stdin = io.TextIOWrapper(
-        sys.stdin.buffer,
+try:
+    sys.stdin = open(
+        sys.stdin.fileno(),
+        mode="r",
         encoding="utf-8",
-        errors="replace"
+        buffering=1
     )
-
-
-if sys.stdout.encoding != "UTF-8":
-
-    sys.stdout = io.TextIOWrapper(
-        sys.stdout.buffer,
-        encoding="utf-8",
-        errors="replace"
-    )
+except Exception:
+    pass
 
 
 sys.path.append(
@@ -103,6 +95,20 @@ def main():
     llm_client = LLMClient()
 
 
+    print(
+        "[LLM Config]"
+    )
+
+    print(
+        f"MODEL: {llm_client.model}"
+    )
+
+    print(
+        f"BASE_URL: {llm_client.base_url}"
+    )
+
+
+
     memory_manager = MemoryManager()
 
 
@@ -114,14 +120,27 @@ def main():
     # 输入
     # ==========================
 
+
     print(
         "\n--------------------------------------------------------------"
     )
 
 
-    user_input = input(
-        "请输入你想对这个世界说的话/做出的行动:\n> "
-    )
+    try:
+
+        user_input = input(
+            "请输入你想对这个世界说的话/做出的行动:\n> "
+        )
+
+
+    except UnicodeDecodeError:
+
+        print(
+            "[System] 输入编码错误，请重新输入。"
+        )
+
+        return
+
 
 
     if not user_input.strip():
@@ -138,6 +157,7 @@ def main():
     # 保存玩家输入
     # ==========================
 
+
     memory_manager.add_message(
         "user",
         user_input
@@ -148,6 +168,7 @@ def main():
     # ==========================
     # Runtime Context
     # ==========================
+
 
     current_time = datetime.now().strftime(
         "%Y-%m-%d %H:%M"
@@ -176,6 +197,7 @@ def main():
     # Retriever
     # ==========================
 
+
     print(
         "[Pipeline] 1/5. Running Retriever filtering..."
     )
@@ -190,6 +212,7 @@ def main():
     # ==========================
     # Context
     # ==========================
+
 
     print(
         "[Pipeline] 2/5. Building unified Context Object..."
@@ -207,6 +230,7 @@ def main():
     # Prompt
     # ==========================
 
+
     print(
         "[Pipeline] 3/5. Rendering final System Prompt..."
     )
@@ -222,6 +246,7 @@ def main():
     # LLM
     # ==========================
 
+
     print(
         "[Pipeline] 4/5. Dispatching payload to LLM Client..."
     )
@@ -236,7 +261,12 @@ def main():
 
         "以沉浸式且符合逻辑的方式推进世界。"
 
+        "不要虚构不存在的系统错误。"
+
+        "不要提及内部API、服务器、代码异常。"
+
     )
+
 
 
     ai_response = llm_client.generate_response(
@@ -250,7 +280,12 @@ def main():
     # 保存AI回复
     # ==========================
 
-    if not ai_response.startswith("Error:"):
+
+    if (
+        ai_response
+        and
+        not ai_response.startswith("Error:")
+    ):
 
         memory_manager.add_message(
             "assistant",
@@ -260,14 +295,15 @@ def main():
     else:
 
         print(
-            "[Memory] Skip saving failed LLM response."
+            "[Memory] Error response ignored."
         )
 
 
 
     # ==========================
-    # 提取长期记忆
+    # 长期记忆提取
     # ==========================
+
 
     memories = memory_extractor.extract(
         user_input
@@ -287,6 +323,7 @@ def main():
     # ==========================
     # 输出
     # ==========================
+
 
     print(
         "[Pipeline] 5/5. Execution complete. Response received:\n"
