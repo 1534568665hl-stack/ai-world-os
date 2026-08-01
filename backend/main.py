@@ -235,6 +235,7 @@ def main():
     # ==========================
 
 
+    if not ai_response.startswith("Error:"):
     memory_manager.add_message(
         "assistant",
         ai_response
