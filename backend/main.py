@@ -18,6 +18,7 @@ except Exception:
     pass
 
 
+
 sys.path.append(
     os.path.dirname(
         os.path.dirname(
@@ -25,6 +26,7 @@ sys.path.append(
         )
     )
 )
+
 
 
 from backend.core.world_loader import WorldLoader
@@ -36,6 +38,9 @@ from backend.core.llm.client import LLMClient
 from backend.core.memory_manager import MemoryManager
 from backend.core.memory_extractor import MemoryExtractor
 
+from backend.core.state_manager import StateManager
+
+
 
 
 def main():
@@ -45,9 +50,11 @@ def main():
     )
 
 
+
     # ==========================
-    # 初始化
+    # World Loader
     # ==========================
+
 
     world_dir = "./world"
 
@@ -81,6 +88,11 @@ def main():
 
 
 
+    # ==========================
+    # Core Modules
+    # ==========================
+
+
     retriever = Retriever(
         entities=entities
     )
@@ -95,13 +107,50 @@ def main():
     llm_client = LLMClient()
 
 
+    memory_manager = MemoryManager()
+
+
+    memory_extractor = MemoryExtractor()
+
+
+    state_manager = StateManager()
+
+
+
+    # ==========================
+    # Load World State
+    # ==========================
+
+
+    world_state = state_manager.load()
+
+
+
+    print(
+        "[World State]"
+    )
+
+
+    print(
+        f"LOCATION: {world_state.get('location','')}"
+    )
+
+
+    print(
+        f"ACTIVE NPC: {world_state.get('active_npc',[])}"
+    )
+
+
+
     print(
         "[LLM Config]"
     )
 
+
     print(
         f"MODEL: {llm_client.model}"
     )
+
 
     print(
         f"BASE_URL: {llm_client.base_url}"
@@ -109,15 +158,8 @@ def main():
 
 
 
-    memory_manager = MemoryManager()
-
-
-    memory_extractor = MemoryExtractor()
-
-
-
     # ==========================
-    # 输入
+    # Input
     # ==========================
 
 
@@ -154,7 +196,7 @@ def main():
 
 
     # ==========================
-    # 保存玩家输入
+    # Save User Memory
     # ==========================
 
 
@@ -180,14 +222,23 @@ def main():
         "message":
             user_input,
 
+
         "time":
             current_time,
 
+
         "current_location":
-            "",
+            world_state.get(
+                "location",
+                ""
+            ),
+
 
         "active_npc":
-            []
+            world_state.get(
+                "active_npc",
+                []
+            )
 
     }
 
@@ -210,7 +261,7 @@ def main():
 
 
     # ==========================
-    # Context
+    # Context Builder
     # ==========================
 
 
@@ -227,7 +278,7 @@ def main():
 
 
     # ==========================
-    # Prompt
+    # Prompt Builder
     # ==========================
 
 
@@ -256,14 +307,14 @@ def main():
 
         "你是 AI World OS 的世界运行核心控制台。"
 
-        "请结合给定的世界数据、角色特征、"
-        "历史记忆与运行状态，"
+        "请结合世界数据、角色设定、"
+        "历史记忆和当前世界状态推进剧情。"
 
-        "以沉浸式且符合逻辑的方式推进世界。"
+        "保持世界连续性。"
 
         "不要虚构不存在的系统错误。"
 
-        "不要提及内部API、服务器、代码异常。"
+        "不要向玩家暴露API、代码、服务器细节。"
 
     )
 
@@ -277,7 +328,7 @@ def main():
 
 
     # ==========================
-    # 保存AI回复
+    # Save Assistant Memory
     # ==========================
 
 
@@ -301,7 +352,7 @@ def main():
 
 
     # ==========================
-    # 长期记忆提取
+    # Long Term Memory
     # ==========================
 
 
@@ -321,7 +372,7 @@ def main():
 
 
     # ==========================
-    # 输出
+    # Output
     # ==========================
 
 
