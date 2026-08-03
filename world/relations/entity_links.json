@@ -1,0 +1,16 @@
+{
+  "relations": [
+    {
+      "from": "L_Warm_Corner",
+      "type": "contains",
+      "to": "momo",
+      "description": "沫沫是暖阳角落咖啡店的常驻咖啡师"
+    },
+    {
+      "from": "catnip_apt_302",
+      "type": "home_of",
+      "to": "momo",
+      "description": "猫薄荷公寓302室是沫沫的私人住所"
+    }
+  ]
+}
