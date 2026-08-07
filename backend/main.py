@@ -38,6 +38,10 @@ from backend.core.memory_extractor import MemoryExtractor
 
 from backend.core.state_manager import StateManager
 from backend.core.state_updater import StateUpdater
+from backend.core.event_detector import EventDetector
+from backend.core.relation_updater import RelationUpdater
+from backend.core.event_memory import EventMemoryManager
+from backend.core.time_manager import TimeManager
 
 
 
@@ -112,6 +116,20 @@ def main():
 
 
     state_updater = StateUpdater()
+
+
+    event_detector = EventDetector()
+
+
+    relation_updater = RelationUpdater()
+
+
+    event_memory_manager = EventMemoryManager()
+
+
+    time_manager = TimeManager()
+    time_manager.load()
+    world_time = time_manager.get_current_time()
 
 
 
@@ -194,6 +212,79 @@ def main():
 
 
     # ==========================
+    # Detect Player Event
+    # ==========================
+
+
+    event = event_detector.detect(
+        user_input
+    )
+
+
+    if event.get("event_type"):
+
+        event_type = event.get(
+            "event_type",
+            ""
+        )
+
+        target = event.get(
+            "target",
+            ""
+        )
+
+        value = event.get(
+            "value",
+            0
+        )
+
+        print(
+            "[Event]"
+        )
+
+        print(
+            f"type: {event_type}"
+        )
+
+        print(
+            f"target: {target}"
+        )
+
+        event_memory_manager.save_event(
+            event
+        )
+
+        if target:
+
+            relation_updater.update(
+                target,
+                event_type,
+                value
+            )
+
+            print(
+                "[Relation]"
+            )
+
+            print(
+                f"updated: {target}"
+            )
+
+        time_advance_minutes = {
+            "chat": 5,
+            "help": 30,
+            "gift": 10,
+            "conflict": 20,
+        }.get(event_type)
+
+        if time_advance_minutes is not None:
+            world_time = time_manager.advance(
+                minutes=time_advance_minutes
+            )
+
+
+
+    # ==========================
     # Update World State
     # ==========================
 
@@ -267,7 +358,11 @@ def main():
             world_state.get(
                 "active_npc",
                 []
-            )
+            ),
+
+
+        "world_time":
+            world_time
 
     }
 
