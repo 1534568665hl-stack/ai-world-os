@@ -15,9 +15,16 @@ class StateManager:
     """
 
 
-    def __init__(self, path="memory/world_state.json"):
+    def __init__(self, path=None):
 
-        self.path = path
+        project_root = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "../..")
+        )
+        self.path = path or os.path.join(
+            project_root,
+            "memory",
+            "world_state.json"
+        )
 
         folder = os.path.dirname(self.path)
 
