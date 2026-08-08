@@ -121,6 +121,16 @@ class PromptBuilder:
             []
         )
 
+        relations = context.get(
+            "relations",
+            {}
+        )
+
+        npc_state = context.get(
+            "npc_state",
+            {}
+        )
+
 
 
         # ==================================================
@@ -135,6 +145,16 @@ class PromptBuilder:
         prompt_sections.append(
             f"* **当前系统时间**: "
             f"{runtime.get('time', '未知时间')}"
+        )
+
+        prompt_sections.append(
+            f"* **当前世界时间**: "
+            f"{json.dumps(runtime.get('world_time', {}), ensure_ascii=False)}"
+        )
+
+        prompt_sections.append(
+            "* **时间行为规则**: NPC行为必须符合当前世界时间；"
+            "凌晨时NPC可能休息，白天可能工作，晚上可能回家。"
         )
 
 
@@ -157,6 +177,40 @@ class PromptBuilder:
             f"{active_npcs}"
         )
 
+        prompt_sections.append(
+            f"* **NPC当前状态**: "
+            f"{json.dumps(npc_state, ensure_ascii=False)}"
+        )
+
+        prompt_sections.append(
+            "* **日程行为规则**: NPC行为必须符合当前日程。"
+        )
+
+
+        prompt_sections.append("")
+
+
+        # ==================================================
+        # 4 Relationship
+        # ==================================================
+
+        prompt_sections.append(
+            "# [4/9] NPC Relationship (NPC与玩家关系)"
+        )
+
+        relation_records = (
+            relations
+            if isinstance(relations, list)
+            else [relations] if relations else []
+        )
+
+        if relation_records:
+            for relation in relation_records:
+                prompt_sections.append(
+                    json.dumps(relation, ensure_ascii=False)
+                )
+        else:
+            prompt_sections.append("（当前没有可用的NPC关系数据）")
 
         prompt_sections.append("")
 
@@ -235,7 +289,7 @@ class PromptBuilder:
         # ==================================================
 
         prompt_sections.append(
-            "# [4/8] Related Items (当前环境关联物品)"
+            "# [5/9] Related Items (当前环境关联物品)"
         )
 
 
@@ -269,7 +323,7 @@ class PromptBuilder:
         # ==================================================
 
         prompt_sections.append(
-            "# [5/8] Related Rules (世界运行底层规则/物理法则)"
+            "# [6/9] Related Rules (世界运行底层规则/物理法则)"
         )
 
 
@@ -303,7 +357,7 @@ class PromptBuilder:
         # ==================================================
 
         prompt_sections.append(
-            "# [6/8] Memory Records (长短期记忆片段)"
+            "# [7/9] Memory Records (长短期记忆片段)"
         )
 
 
@@ -384,7 +438,7 @@ class PromptBuilder:
         # ==================================================
 
         prompt_sections.append(
-            "# [7/8] Dynamic Events (突发事件快照)"
+            "# [8/9] Dynamic Events (突发事件快照)"
         )
 
 
@@ -416,7 +470,7 @@ class PromptBuilder:
         # ==================================================
 
         prompt_sections.append(
-            "# [8/8] User Message (玩家最新交互输入)"
+            "# [9/9] User Message (玩家最新交互输入)"
         )
 
 
